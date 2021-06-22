@@ -11,7 +11,7 @@ namespace ToDoApi.Controllers
 {
     [ApiController]
     [Route("api/todos")]
-    //[Authorize]
+    [Authorize]
     public class ToDosController: ControllerBase
     {
 
