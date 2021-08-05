@@ -11,7 +11,7 @@ namespace ToDoApi.Controllers
 {
     [ApiController]
     [Route("api/todos")]
-    //[Authorize]
+    [Authorize]
     public class ToDosController: ControllerBase
     {
 
@@ -20,8 +20,8 @@ namespace ToDoApi.Controllers
 
         public ToDosController(IMapper mapper, ITodoRepository todoRepository)
         {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _todoRepository = todoRepository ?? throw new ArgumentNullException(nameof(todoRepository));
+            _mapper = mapper;
+            _todoRepository = todoRepository;
         }
 
         [HttpGet]

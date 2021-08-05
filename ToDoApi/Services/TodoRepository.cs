@@ -14,7 +14,7 @@ namespace ToDoApi.Services
 
         public TodoRepository(ToDoContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
         public void AddToDo(ToDo toDo)
         {

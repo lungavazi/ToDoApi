@@ -25,7 +25,7 @@ namespace ToDoApi
 
         public Startup(IConfiguration configuration)
         {
-            _configuration = configuration ?? throw new Exception(nameof(configuration));
+            _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -42,12 +42,12 @@ namespace ToDoApi
                 o.UseSqlServer(connectionString);
             });
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //.AddJwtBearer(options =>
-            //{
-            //    options.Authority = "{https://localhost:44337}";
-            //    //options.Audience = "{}";
-            //});
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.Authority = "{https://localhost:44337}";
+                //options.Audience = "{}";
+            });
 
             services.AddAuthentication(options =>
             {
@@ -66,8 +66,8 @@ namespace ToDoApi
                 };
             });
 
-            services.AddScoped<ITodoRepository, TodoRepository>();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddSingleton<ITodoRepository, TodoRepository>()
+                    .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,9 +79,9 @@ namespace ToDoApi
             }
 
             //app.UseAuthentication();
-            app.UseStatusCodePages();
-            app.UseMvc();
-            app.UseHttpsRedirection();
+            app.UseStatusCodePages()
+               .UseMvc()
+               .UseHttpsRedirection();
         }
     }
 }
